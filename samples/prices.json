@@ -1,0 +1,22 @@
+{
+  "currency": "MAD",
+  "timestamp": 1731500400,
+  "items": [
+    {
+      "metal": "XAU",
+      "name": "Gold",
+      "price": 24500.50,
+      "prevClosePrice": 24400.00,
+      "chg": 100.50,
+      "chgPercent": 0.41
+    },
+    {
+      "metal": "XAG",
+      "name": "Silver",
+      "price": 310.20,
+      "prevClosePrice": 305.00,
+      "chg": 5.20,
+      "chgPercent": 1.70
+    }
+  ]
+}
