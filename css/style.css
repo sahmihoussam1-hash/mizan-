@@ -48,3 +48,27 @@ button{
 .form-group {
     margin-bottom: 10px;
 }
+
+.price-card {
+    background-color: #fff;
+    border: 1px solid #e2e8e2;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.variation-badge {
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+.trend-up {
+    color:greenyellow ;
+    background-color: #1c7e2e;
+}
+.trend-down {
+    color: #ff6b6b;
+    background-color: #b90404;
+}
