@@ -65,10 +65,18 @@ button{
     margin-top: 0.5rem;
 }
 .trend-up {
-    color:greenyellow ;
-    background-color: #1c7e2e;
+    color: #10b981; /* Vert moderne */
+    font-weight: 600;
 }
+
 .trend-down {
-    color: #ff6b6b;
-    background-color: #b90404;
+    color: #ef4444; /* Rouge moderne */
+    font-weight: 600;
+}
+
+#datetime-container {
+    font-size: 0.9rem;
+    color: #b45309; /* Ton doré / marron assorti au thème Mizan */
+    margin-bottom: 1rem;
+    font-weight: 500;
 }
