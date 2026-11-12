@@ -1,5 +1,6 @@
 import { fetchGoldPrices } from './api.js';
 import { renderPrices } from './display.js';
+import { initEstimator,updateEstimatorData } from './estimateur.js';
 import { getSavedCurrency, saveCurrency } from './storage.js';
 
 function startClock(){
@@ -21,6 +22,7 @@ function startClock(){
     }
     updateTime();
     setInterval(updateTime,1000);
+
 }
       
 async function initApp() {
@@ -41,6 +43,7 @@ async function initApp() {
             console.log(`Chargement des prix pour la devise : ${currency}`);
             const data = await fetchGoldPrices(currency);
             renderPrices(data, currency);
+             updateEstimatorData(data, currency);
         } catch (error) {
             console.error("Erreur lors du chargement :", error);
         }
@@ -49,6 +52,7 @@ async function initApp() {
     // Chargement initial au démarrage avec la bonne valeur .value
     const selectedCurrency = currencySelect ? currencySelect.value : currentCurrency;
     await loadData(selectedCurrency);
+    
 
     // Écouteur sur le changement de devise du sélecteur
     if (currencySelect) {
@@ -70,4 +74,5 @@ async function initApp() {
 
 // Lancement de l'application
 initApp();
+initEstimator();
 startClock();
