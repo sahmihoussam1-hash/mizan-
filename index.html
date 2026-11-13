@@ -8,44 +8,46 @@
 </head>
 <body>
     <div class="container">
-        <h1>Mizan- Al Andalous</h1>
-        <p id="datetime-container" class="datetime-badge">Chargement de la date...</p>
+        <header class="site-header">
+            <h1>Mizan</h1>
+            <p class="subtitle">Bijouterie Al Andalous · Cours de l'or et de l'argent</p>
+            <p id="datetime-container">Chargement de la date...</p>
+        </header>
         <div class="controls">
-            <label for="currency">Devise : </label>
-            <select id="currency">
-                <option value="MAD">MAD</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-            </select>
+            <div class="currency-group">
+                <label for="currency">Devise</label>
+                <select id="currency">
+                    <option value="MAD">MAD</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </div>
             <button id="refresh-btn">Actualiser</button>
         </div>
-
-        <div id="status" class="error"></div>
-
+        <div id="status" hidden>
+            <p id="status-message"></p>
+            <button id="retry-btn" hidden>Réessayer</button>
+        </div>
         <div id="prices-container">
             <p>Chargement des cours...</p>
         </div>
-
         <div class="card">
-    <h3>Estimateur de bijou (Salma)</h3>
-    
-    <div class="form-group">
-        <label for="metal-type">Métal : </label>
-        <select id="metal-type">
-            <option value="gold">Or (XAU)</option>
-            <option value="silver">Argent (Silver)</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="weight">Poids (g) : </label>
-        <input type="number" id="weight" placeholder="Ex: 10" min="0" step="0.01">
-    </div>
-    
-    <p>Valeur estimée : <span id="estimate">0.00</span></p>
-    <p id="estimator-error" class="error"></p>
-</div>
-
+            <h3>Estimateur de bijou (Salma)</h3>
+            <div class="form-group">
+                <label for="metal-type">Métal : </label>
+                <select id="metal-type">
+                    <option value="gold">Or (XAU)</option>
+                    <option value="silver">Argent (Silver)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="weight">Poids (g) : </label>
+                <input type="number" id="weight" placeholder="Ex: 10" min="0" step="0.01">
+            </div>
+            <p>Valeur estimée : <span id="estimate">0.00</span></p>
+            <p id="estimator-error" class="error"></p>
+        </div>
+    </div> 
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

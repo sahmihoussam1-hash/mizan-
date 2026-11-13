@@ -54,14 +54,16 @@ export function renderPrices(data, activeCurrency = 'MAD') {
         const formattedChange = Math.abs(changeValue).toFixed(2);
         const formattedPercent = Math.abs(changePercent).toFixed(2);
 
-        // 3. Application dynamique du style (vert / rouge)
-        if (changeValue >= 0) {
-            variationElement.classList.add('trend-up');
-            variationElement.textContent = `▲ +${formattedChange} (+${formattedPercent}%)`;
-        } else {
-            variationElement.classList.add('trend-down');
-            variationElement.textContent = `▼ -${formattedChange} (-${formattedPercent}%)`;
-        }
+       
+       if (changeValue >= 0) {
+    card.classList.add('card-up');       // la carte devient verte
+    variationElement.classList.add('trend-up');
+    variationElement.textContent = `▲ +${formattedChange} (+${formattedPercent}%)`;
+} else {
+    card.classList.add('card-down');     // la carte devient rouge
+    variationElement.classList.add('trend-down');
+    variationElement.textContent = `▼ -${formattedChange} (-${formattedPercent}%)`;
+}
 
         card.appendChild(title);
         card.appendChild(priceElement);
