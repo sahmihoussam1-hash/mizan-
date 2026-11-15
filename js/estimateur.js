@@ -1,94 +1,89 @@
-let currentGoldGramPrice = 0;
-let currentSilverGramPrice = 0;
-let activeCurrencySymbol = 'MAD';
+// Une once troy = 31,1035 grammes
+const GRAMS_PER_OUNCE = 31.1035;
 
-/**
- * Calcule et affiche la valeur estimée du bijou
- */
-function calculateJewelryEstimate() {
+// Les prix par gramme, mis à jour après chaque requête
+let goldPricePerGram = 0;
+let silverPricePerGram = 0;
+let activeCurrency = 'MAD';
+
+// ----- FONCTIONS PURES (ne touchent pas à la page) -----
+
+// Calcule la valeur du bijou, arrondie à 2 décimales
+export function calculateEstimate(weight, pricePerGram) {
+    return Math.round(weight * pricePerGram * 100) / 100;
+}
+
+// Vérifie le poids. Renvoie un message d'erreur, ou '' si tout va bien
+export function validateWeight(text) {
+    if (text.trim() === '') {
+        return 'Veuillez entrer un poids.';
+    }
+
+    const weight = Number(text);
+
+    if (isNaN(weight)) {
+        return 'Veuillez entrer un nombre valide.';
+    }
+    if (weight < 0) {
+        return 'Le poids ne peut pas être négatif.';
+    }
+    if (weight === 0) {
+        return 'Le poids doit être supérieur à 0.';
+    }
+
+    return '';
+}
+
+// ----- AFFICHAGE (parle à la page) -----
+
+function showEstimate() {
     const weightInput = document.getElementById('weight');
     const metalSelect = document.getElementById('metal-type');
     const estimateSpan = document.getElementById('estimate');
     const errorElement = document.getElementById('estimator-error');
 
-    if (!weightInput || !estimateSpan) return;
+    // 1. On vérifie le poids
+    const errorMessage = validateWeight(weightInput.value);
 
-    const weightValue = weightInput.value.trim();
-    const weight = parseFloat(weightValue);
-
-    // 1. Validation : Champ vide
-    if (weightValue === "") {
-        estimateSpan.textContent = `0.00`;
-        if (errorElement) errorElement.textContent = "Veuillez entrer un poids.";
+    if (errorMessage !== '') {
+        estimateSpan.textContent = '0.00';
+        errorElement.textContent = errorMessage;
         return;
     }
 
-    // 2. Validation : Non numérique ou négatif
-    if (isNaN(weight)) {
-        estimateSpan.textContent = `0.00`;
-        if (errorElement) errorElement.textContent = "Veuillez entrer un nombre valide.";
-        return;
+    // 2. Tout est bon : on efface l'erreur
+    errorElement.textContent = '';
+
+    // 3. On choisit le prix du bon métal
+    let price = goldPricePerGram;
+    if (metalSelect.value === 'silver') {
+        price = silverPricePerGram;
     }
 
-    if (weight < 0) {
-        estimateSpan.textContent = `0.00`;
-        if (errorElement) errorElement.textContent = "Le poids ne peut pas être négatif.";
-        return;
-    }
-
-    // Si tout est ok, on nettoie le message d'erreur
-    if (errorElement) errorElement.textContent = "";
-
-    // 3. Choix du métal et application du prix courant
-    const selectedMetal = metalSelect ? metalSelect.value : 'gold';
-    const pricePerGram = selectedMetal === 'silver' ? currentSilverGramPrice : currentGoldGramPrice;
-
-    const totalValue = weight * pricePerGram;
-    estimateSpan.textContent = `${totalValue.toFixed(2)} ${activeCurrencySymbol}`;
+    // 4. On calcule et on affiche
+    const total = calculateEstimate(Number(weightInput.value), price);
+    estimateSpan.textContent = total.toFixed(2) + ' ' + activeCurrency;
 }
 
-/**
- * Initialise les écouteurs d'événements
- */
+// Branche les événements (appelé une fois au démarrage)
 export function initEstimator() {
-    const weightInput = document.getElementById('weight');
-    const metalSelect = document.getElementById('metal-type');
-
-    if (weightInput) {
-        weightInput.addEventListener('input', calculateJewelryEstimate);
-    }
-    if (metalSelect) {
-        metalSelect.addEventListener('change', calculateJewelryEstimate);
-    }
+    document.getElementById('weight').addEventListener('input', showEstimate);
+    document.getElementById('metal-type').addEventListener('change', showEstimate);
 }
 
-/**
- * Met à jour les prix de référence reçus de l'API / JSON
- */
+// Met à jour les prix après chaque requête réussie
 export function updateEstimatorData(data, currency) {
-    activeCurrencySymbol = currency;
+    activeCurrency = currency;
 
-    if (Array.isArray(data)) {
-        data.forEach(item => {
-            const symbol = (item.symbol || '').toLowerCase();
-            if (symbol.includes('xau')) {
-                currentGoldGramPrice = parseFloat(item.price || item.per_gram_mad || 0);
-            } else if (symbol.includes('silver') || symbol.includes('xag')) {
-                currentSilverGramPrice = parseFloat(item.price || 0);
-            }
-        });
-    } else if (typeof data === 'object' && data !== null) {
-        if (data.xau && data.xau.price) {
-            currentGoldGramPrice = parseFloat(data.xau.price);
-        }
-        if (data.silver_usd_oz || data.silver) {
-            const silverObj = data.silver_usd_oz || data.silver;
-            currentSilverGramPrice = parseFloat(silverObj.price || silverObj);
-        }
-        if (data.per_gram_mad && currency === 'MAD') {
-            currentGoldGramPrice = parseFloat(data.per_gram_mad);
-        }
+    // Or : prix par gramme déjà dans ta devise
+    if (data.xau) {
+        goldPricePerGram = data.xau.price;
     }
 
-    calculateJewelryEstimate();
+    // Argent : dollars par once, converti en gramme et en ta devise
+    if (data.silver_usd_oz && data.fx_rates && data.fx_rates[currency]) {
+        silverPricePerGram = data.silver_usd_oz / GRAMS_PER_OUNCE * data.fx_rates[currency];
+    }
+
+    showEstimate();
 }
