@@ -1,4 +1,4 @@
-import { fetchGoldPrices } from './api.js';
+import { fetchGoldPrices, fetchChart } from './api.js';
 import { renderPrices } from './display.js';
 import { initEstimator, updateEstimatorData } from './estimateur.js';
 import { getSavedCurrency, saveCurrency } from './storage.js';
@@ -34,34 +34,50 @@ function initApp() {
     const status = document.getElementById('status');
     const statusMessage = document.getElementById('status-message');
     const container = document.getElementById('prices-container');
+    const lastUpdate = document.getElementById('last-update');   // NOUVEAU
 
     // 2. On remet la devise sauvegardée dans le sélecteur
     currencySelect.value = getSavedCurrency();
 
     // 3. La fonction qui charge les prix
     async function loadData(currency) {
-        // --- État "chargement" ---
+        // --- État "chargement" : on bloque les boutons ---
         refreshBtn.disabled = true;
+        retryBtn.disabled = true;          // NOUVEAU
+        currencySelect.disabled = true;    // NOUVEAU
         status.hidden = false;
         retryBtn.hidden = true;
         statusMessage.textContent = 'Chargement des cours...';
         container.textContent = '';
 
-        try {
+       try {
             const data = await fetchGoldPrices(currency);
+            const goldChart = await fetchChart('xau');
+            const silverChart = await fetchChart('silver');
 
             // --- État "succès" ---
-            renderPrices(data, currency);
+            renderPrices(data, currency, goldChart, silverChart);
             updateEstimatorData(data, currency);
             status.hidden = true;
+
+            // NOUVEAU : date de mise à jour envoyée par l'API
+            const dateText = data.price_as_of || data.updated_at;
+            if (dateText) {
+                lastUpdate.textContent = 'Dernière mise à jour des prix : ' + new Date(dateText).toLocaleString('fr-FR');
+            } else {
+                lastUpdate.textContent = 'Date de mise à jour indisponible.';
+            }
         } catch (error) {
             // --- État "erreur" ---
             statusMessage.textContent = error.message;
             retryBtn.hidden = false;
+            lastUpdate.textContent = '';   // NOUVEAU
         }
 
-        // Dans tous les cas, on réactive le bouton
+        // Dans tous les cas, on débloque les boutons
         refreshBtn.disabled = false;
+        retryBtn.disabled = false;         // NOUVEAU
+        currencySelect.disabled = false;   // NOUVEAU
     }
 
     // 4. Les clics de l'utilisateur

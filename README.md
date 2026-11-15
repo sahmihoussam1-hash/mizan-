@@ -1,15 +1,39 @@
-# Mizan : tableau de bord des cours de l'or
+# Mizan
 
-## API utilisée
-- Documentation : <lien exact>
-- URL de base : ...
-- Clé requise : oui / non (envoyée dans : ...)
+Application web de la bijouterie **Al Andalous** (Nador) pour consulter les cours de l'or et de l'argent.
 
-## Endpoints
-| Usage | Méthode + chemin | Paramètres | Réponse (champs utiles) |
-|---|---|---|---|
-| Prix courants | GET ... | métal: ..., devise: ... | ... |
-| Historique    | GET ... | période: ... | ... |
+Données : API publique [xaus.com](https://xaus.com/api).
 
-## Exemple de réponse (copiée depuis l'onglet Réseau)
-{ ... }
+## Fonctionnalités
+
+- Prix de l'or et de l'argent
+- Choix de la devise : MAD, USD, EUR (mémorisée)
+- Estimateur de bijou à partir du poids en grammes
+- États visibles : chargement, succès, erreur
+- Erreurs distinguées : hors-ligne, réseau, 4xx, 5xx, quota, JSON illisible
+- Boutons « Actualiser » et « Réessayer »
+
+## Technologies
+
+HTML, CSS, JavaScript vanilla (modules ES). Aucun framework.
+
+## Structure
+
+```
+index.html
+css/style.css
+js/main.js
+js/api.js
+js/display.js
+js/estimateur.js
+js/storage.js
+```
+
+
+Aucune clé d'API n'est nécessaire.
+
+## À faire
+
+- Variations réelles par rapport à la veille
+- Historique 7 / 30 jours
+- Journal des requêtes (bonus)
