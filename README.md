@@ -27,13 +27,12 @@ js/api.js
 js/display.js
 js/estimateur.js
 js/storage.js
+js/chart.js
 ```
 
 
 Aucune clé d'API n'est nécessaire.
 
 ## À faire
-
-- Variations réelles par rapport à la veille
-- Historique 7 / 30 jours
+- FetchChart ne distingue pas encore tous les types d’erreur (quota, 4xx,   5xx, JSON illisible),
 - Journal des requêtes (bonus)

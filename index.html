@@ -33,6 +33,30 @@
         <div id="prices-container">
             <p>Chargement des cours...</p>
         </div>
+                <!-- Historique des prix -->
+        <div class="card" id="history-section">
+            <h3>Historique des prix</h3>
+
+            <div class="form-group">
+                <label for="history-metal">Métal : </label>
+                <select id="history-metal">
+                    <option value="xau">Or</option>
+                    <option value="silver">Argent</option>
+                </select>
+            </div>
+
+            <div class="history-buttons">
+                <button id="history-7">7 jours</button>
+                <button id="history-30">30 jours</button>
+            </div>
+
+            <!-- Message : chargement ou erreur -->
+            <p id="history-message"></p>
+
+            <!-- Le graphique (les barres) et les dates dessous -->
+            <div id="history-chart"></div>
+            <div id="history-labels"></div>
+        </div>
         <div class="card">
             <h3>Estimateur de bijou (Salma)</h3>
             <div class="form-group">

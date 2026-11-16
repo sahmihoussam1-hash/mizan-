@@ -2,6 +2,7 @@ import { fetchGoldPrices, fetchChart } from './api.js';
 import { renderPrices } from './display.js';
 import { initEstimator, updateEstimatorData } from './estimateur.js';
 import { getSavedCurrency, saveCurrency } from './storage.js';
+import { drawChart } from './chart.js';
 
 // ----- L'horloge (inchangée) -----
 function startClock() {
@@ -97,6 +98,57 @@ function initApp() {
     // 5. Premier chargement au démarrage
     loadData(currencySelect.value);
 }
+    // ----- Historique des prix -----
+    const historyMetal = document.getElementById('history-metal');
+    const history7 = document.getElementById('history-7');
+    const history30 = document.getElementById('history-30');
+    const historyMessage = document.getElementById('history-message');
+
+    let historyDays = 30;   // la période choisie (30 par défaut)
+
+    async function loadHistory() {
+        // --- État "chargement" ---
+        history7.disabled = true;
+        history30.disabled = true;
+        historyMetal.disabled = true;
+        historyMessage.textContent = "Chargement de l'historique...";
+
+        try {
+            const chart = await fetchChart(historyMetal.value);
+            const points = chart.points || chart;
+
+            // On garde seulement les derniers points (7 ou 30)
+            const lastPoints = points.slice(-historyDays);
+
+            // --- État "succès" ---
+            drawChart(lastPoints);
+            historyMessage.textContent = 'Prix de clôture en USD (' + lastPoints.length + ' points)';
+        } catch (error) {
+            // --- État "erreur" ---
+            drawChart([]);   // on vide le graphique
+            historyMessage.textContent = error.message + ' Cliquez sur un bouton pour réessayer.';
+        }
+
+        // Dans tous les cas, on débloque les boutons
+        history7.disabled = false;
+        history30.disabled = false;
+        historyMetal.disabled = false;
+    }
+
+    history7.addEventListener('click', function () {
+        historyDays = 7;
+        loadHistory();
+    });
+
+    history30.addEventListener('click', function () {
+        historyDays = 30;
+        loadHistory();
+    });
+
+    historyMetal.addEventListener('change', loadHistory);
+
+    // Premier affichage du graphique
+    loadHistory();
 
 // ----- Démarrage -----
 initApp();
