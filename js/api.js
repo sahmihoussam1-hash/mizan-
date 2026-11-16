@@ -33,3 +33,16 @@ export async function fetchGoldPrices(currency = 'MAD') {
         throw new Error("Réponse illisible.");
     }
 }
+
+// Cette fonction va chercher les prix des derniers jours d'un métal
+// 'xau' = or, 'silver' = argent
+export async function fetchChart(symbol) {
+    const url = 'https://xaus.com/api/v1/chart?symbol=' + symbol + '&range=1mo&interval=1d';
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error("Impossible de charger les variations.");
+    }
+
+    return await response.json();
+}

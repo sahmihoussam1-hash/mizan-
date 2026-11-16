@@ -189,3 +189,49 @@ select:focus, input:focus {
     outline: none;
     border-color: #ffc933;
 }
+
+/* ===== Historique ===== */
+.history-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Le graphique : barres côte à côte, collées en bas */
+#history-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 180px;
+    padding: 10px 10px 0 10px;
+    border-bottom: 2px solid #ffc933;
+}
+
+.history-column {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.history-bar {
+    width: 100%;
+    background-color: #ffc933;
+    border-radius: 3px 3px 0 0;
+}
+
+/* Les dates sous le graphique */
+#history-labels {
+    display: flex;
+    gap: 4px;
+    padding: 0 10px;
+}
+
+#history-labels div {
+    flex: 1;
+    text-align: center;
+    font-size: 11px;
+    color: #c4c7cc;
+    margin-top: 6px;
+}
