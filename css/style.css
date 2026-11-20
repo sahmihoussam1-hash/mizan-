@@ -1,44 +1,48 @@
 /* ===== La page ===== */
 body {
     font-family: Arial, sans-serif;
-    background-color: #2b2d31;   /* gris foncé */
-    color: #d4d6da;              /* argent */
+    background-color: #f4f4f4;   /* gris très clair */
+    color: #222222;              /* texte sombre */
     margin: 0;
     padding: 20px;
 }
 
 /* La boîte au centre du site */
 .container {
-    max-width: 640px;
+    max-width: 650px;
     margin: 0 auto;
 }
+
 #last-update {
     text-align: center;
-    color: #c4c7cc;
+    color: #666666;
     font-size: 14px;
     margin-bottom: 15px;
 }
+
 /* ===== Le haut de la page ===== */
 .site-header {
     text-align: center;
-    border-bottom: 2px solid #ffc933;   /* ligne jaune */
+    border-bottom: 2px solid #2563eb;   /* ligne bleue */
     margin-bottom: 20px;
-    padding-bottom: 15px;
+    padding-bottom: 12px;
 }
 
 h1 {
-    color: #d4d6da;
-    letter-spacing: 5px;
+    color: #222222;
+    font-size: 26px;
     text-transform: uppercase;
+    margin: 0 0 6px 0;
 }
 
 .subtitle {
-    color: #ffc933;              /* jaune */
+    color: #2563eb;              /* bleu */
     font-weight: bold;
+    margin: 0;
 }
 
 #datetime-container {
-    color: #9a9da4;              /* gris clair */
+    color: #666666;              /* gris */
     font-size: 14px;
 }
 
@@ -47,37 +51,45 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
 .currency-group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 /* ===== Listes, champs et boutons ===== */
 select, input {
-    background-color: #1f2023;
-    color: #d4d6da;
-    border: 1px solid #4a4d54;
-    border-radius: 5px;
-    padding: 10px;
+    background-color: #ffffff;
+    color: #222222;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* Contour bleu quand on clique dans un champ */
+select:focus, input:focus {
+    outline: none;
+    border-color: #2563eb;
 }
 
 button {
-    background-color: #ffc933;   /* jaune */
-    color: #222222;
+    background-color: #2563eb;   /* bleu */
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-weight: bold;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 14px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #e0ac12;   /* jaune plus foncé */
+    background-color: #1d4ed8;   /* bleu plus foncé */
 }
 
 button:disabled {
@@ -87,50 +99,51 @@ button:disabled {
 
 /* ===== Message de chargement ou d'erreur ===== */
 #status {
-    background-color: #35373c;
-    border-left: 4px solid #ffc933;
-    border-radius: 5px;
-    padding: 12px;
-    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-left: 4px solid #2563eb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
     text-align: center;
 }
 
 /* ===== Cartes de prix ===== */
 .price-card {
-    background-color: #35373c;
-    border: 1px solid #4a4d54;
-    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
     padding: 15px;
     margin-bottom: 12px;
     text-align: center;
 }
 
 .price-card h2 {
-    color: #9a9da4;
+    color: #666666;
     font-size: 14px;
     text-transform: uppercase;
 }
 
 .price-card h3 {
-    font-size: 26px;
+    font-size: 24px;
 }
 
 /* Hausse : trait vert à gauche */
 .card-up {
-    border-left: 6px solid #4ade80;
+    border-left: 4px solid #16a34a;
 }
 
 /* Baisse : trait rouge à gauche */
 .card-down {
-    border-left: 6px solid #f87171;
+    border-left: 4px solid #dc2626;
 }
 
 .trend-up {
-    color: #4ade80;   /* vert */
+    color: #16a34a;   /* vert */
 }
 
 .trend-down {
-    color: #f87171;   /* rouge */
+    color: #dc2626;   /* rouge */
 }
 
 .variation-badge {
@@ -139,15 +152,15 @@ button:disabled {
 
 /* ===== Estimateur de bijou ===== */
 .card {
-    background-color: #35373c;
-    border: 1px solid #4a4d54;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
 }
 
 .card h3 {
-    color: #ffc933;
+    color: #2563eb;
     text-align: center;
 }
 
@@ -158,8 +171,9 @@ button:disabled {
 }
 
 .form-group label {
-    color: #9a9da4;
-    margin-bottom: 5px;
+    color: #444444;
+    font-size: 14px;
+    margin-bottom: 4px;
 }
 
 .card select,
@@ -173,21 +187,15 @@ button:disabled {
 }
 
 #estimate {
-    color: #ffc933;
+    color: #2563eb;
     font-weight: bold;
     font-size: 20px;
 }
 
 /* Message d'erreur sous le champ poids */
 .error {
-    color: #f87171;
-    font-size: 14px;
-}
-css
-/* Contour jaune quand on clique dans un champ */
-select:focus, input:focus {
-    outline: none;
-    border-color: #ffc933;
+    color: #dc2626;
+    font-size: 13px;
 }
 
 /* ===== Historique ===== */
@@ -205,7 +213,7 @@ select:focus, input:focus {
     gap: 4px;
     height: 180px;
     padding: 10px 10px 0 10px;
-    border-bottom: 2px solid #ffc933;
+    border-bottom: 2px solid #2563eb;
 }
 
 .history-column {
@@ -217,7 +225,7 @@ select:focus, input:focus {
 
 .history-bar {
     width: 100%;
-    background-color: #ffc933;
+    background-color: #2563eb;
     border-radius: 3px 3px 0 0;
 }
 
@@ -232,6 +240,6 @@ select:focus, input:focus {
     flex: 1;
     text-align: center;
     font-size: 11px;
-    color: #c4c7cc;
+    color: #666666;
     margin-top: 6px;
 }
